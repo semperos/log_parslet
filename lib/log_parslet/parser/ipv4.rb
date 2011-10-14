@@ -10,7 +10,7 @@ module LogParslet
     # form of four octets is allowed by this grammar.
     rule(:ipv4) {
         (dec_octet >> str('.') >> dec_octet >> str('.') >>
-          dec_octet >> str('.') >> dec_octet).as(:ipv4)
+          dec_octet >> str('.') >> dec_octet)
     }
 
     rule(:dec_octet) {

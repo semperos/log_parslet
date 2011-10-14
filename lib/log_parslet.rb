@@ -1,13 +1,13 @@
-require "log_parslet/version"
+require_relative "log_parslet/version"
 
 require 'parslet'
 require 'parslet/convenience'
 require 'pp'
 
-require 'log_parslet/parser/ipv4'
+require_relative 'log_parslet/parser/ipv4'
 
-require 'log_parslet/parser'
-require 'log_parslet/transform'
+require_relative 'log_parslet/parser'
+require_relative 'log_parslet/transform'
 
 module LogParslet
 
@@ -25,8 +25,7 @@ module LogParslet
 
 end
 
-# Ruby version compatibility
-
+# Ruby version compatibility for require/require_relative
 unless Kernel.respond_to?(:require)
   module Kernel
     def require(path)
