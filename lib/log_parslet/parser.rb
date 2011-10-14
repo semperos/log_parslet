@@ -36,29 +36,40 @@ module LogParslet
 
     # host ident authuser date request status bytes
     rule(:nil_field) { str('-') }
-    rule(:host) { (ipv4.as(:host) | nil_field.as(:host)) >> space }
+    rule(:host) { (ipv4 | nil_field).as(:host) >> space }
     rule(:ident) { nil_field.as(:ident) >> space }
-    rule(:authuser) { (match('[^ ]').repeat(1).as(:authuser) | nil_field.as(:authuser)) >> space }
+    rule(:authuser) { (match('[^ ]').repeat(1) | nil_field).as(:authuser) >> space }
     rule(:datetime) { ((lbracket >> date.as(:date) >> slash >>
-                                   month.as(:month) >> slash >>
-                                   year.as(:year) >> colon >>
-                                   hours.as(:hours) >> colon >>
-                                   minutes.as(:minutes) >> colon >>
-                                   seconds.as(:seconds) >> space >>
-                                   timezone.as(:timezone) >> rbracket).as(:datetime) | nil_field.as(:datetime)) >> space }
+                                    month.as(:month) >> slash >>
+                                    year.as(:year) >> colon >>
+                                    hours.as(:hours) >> colon >>
+                                    minutes.as(:minutes) >> colon >>
+                                    seconds.as(:seconds) >> space >>
+                                    timezone.as(:timezone) >> rbracket) | nil_field).as(:datetime) >> space }
     rule(:request) { (dquote >> (http_method.as(:http_method) >> space >>
                                  http_resource.as(:http_resource)  >> space >>
-                                 http_protocol.as(:http_protocol)).as(:request) >> dquote | nil_field.as(:request)) >> space }
-    rule(:status) { (match('\d').repeat(3).as(:status) | nil_field.as(:status)) >> space }
-    rule(:bytes) { (match('\d').repeat(1).as(:bytes) | nil_field.as(:bytes)) >> space?}
-    rule(:entry) { host >> ident >> authuser >> datetime >> request >> status >> bytes }
+                                 http_protocol.as(:http_protocol)) >> dquote | nil_field).as(:request) >> space }
+    rule(:status) { (match('\d').repeat(3) | nil_field).as(:status) >> space }
+    rule(:bytes) { (match('\d').repeat(1) | nil_field).as(:bytes) >> space?}
+    rule(:common_entry) { host >> ident >> authuser >> datetime >> request >> status >> bytes }
 
+  end
+
+  module Combined
+    include Parslet
+    include LogParslet::Base
+    include LogParslet::Common
+
+    rule(:referer) { (dquote >> match('[^"]').repeat >> dquote | nil_field).as(:referer) >> space }
+    rule(:user_agent) { (dquote >> match('[^"]').repeat >> dquote | nil_field).as(:user_agent) >> space? }
+    rule(:combined_entry) { common_entry >> referer >> user_agent }
   end
 
   class Parser < Parslet::Parser
     include LogParslet::Common
+    include LogParslet::Combined
 
-    root :entry
+    root :combined_entry
   end
 
 end
