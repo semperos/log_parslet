@@ -18,7 +18,7 @@ module LogParslet
     out = parser.parse(s)
 #    out = transform.apply(tree)
 
-    pp out
+    out
   rescue Parslet::ParseFailed => e
     puts e, parser.root.error_tree
   end
