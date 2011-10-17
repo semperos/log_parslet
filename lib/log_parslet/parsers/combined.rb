@@ -1,6 +1,6 @@
 module LogParslet
 
-  module Parsers
+  module Parser
 
     class Combined < Parslet::Parser
       include LogParslet::RuleSet::Combined

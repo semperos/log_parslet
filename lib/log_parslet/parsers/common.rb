@@ -1,6 +1,6 @@
 module LogParslet
 
-  module Parsers
+  module Parser
 
     class Common < Parslet::Parser
       include LogParslet::RuleSet::Common

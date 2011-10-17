@@ -18,7 +18,7 @@ require_relative 'log_parslet/parser'
 module LogParslet
 
   def self.parse(s)
-    parser = LogParslet::Parser.new_parser(:combined)
+    parser = LogParslet.new_parser(:combined)
 #    transform = LogParslet::Transform.new
 
     out = parser.parse(s)
