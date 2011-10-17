@@ -1,0 +1,9 @@
+rvm:
+  - 1.8.7
+  - 1.9.2
+branches:
+  only:
+    - master
+notifications:
+  recipients:
+    - daniel.l.gregoire@gmail.com

@@ -19,7 +19,10 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-rspec"
+  s.add_development_dependency "rb-fsevent"
+  s.add_development_dependency "growl"
   s.add_development_dependency "rspec"
-  s.add_development_dependency "watchr"
   s.add_runtime_dependency "parslet", "~> 1.2"
 end
