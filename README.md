@@ -1,4 +1,4 @@
-# LogParslet # [![Build Status](https://secure.travis-ci.org/semperos/log_parslet.png)](https://secure.travis-ci.org/semperos/log_parslet.png)
+# LogParslet [![Build Status](https://secure.travis-ci.org/semperos/log_parslet.png)](https://secure.travis-ci.org/semperos/log_parslet.png)
 
 A generic log parser written in Ruby using the Parslet PEG gem.
 
