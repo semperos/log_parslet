@@ -4,6 +4,7 @@ module LogParslet
     def self.new_parser(parser_name)
       parser_name = "LogParslet::RuleSet::#{parser_name.to_s.capitalize}"
 
+      # Borrowed from ActiveSupport#constantize
       names = parser_name.split('::')
       names.shift if names.empty? || names.first.empty?
 
