@@ -1,3 +1,12 @@
+# Ruby version compatibility for require/require_relative
+unless Kernel.respond_to?(:require_relative)
+  module Kernel
+    def require_relative(path)
+      require File.join(File.dirname(caller[0]), path.to_str)
+    end
+  end
+end
+
 require 'rubygems'
 require_relative "log_parslet/version"
 
@@ -32,11 +41,3 @@ module LogParslet
 
 end
 
-# Ruby version compatibility for require/require_relative
-unless Kernel.respond_to?(:require)
-  module Kernel
-    def require(path)
-      require File.join(File.dirname(caller[0]), path.to_str)
-    end
-  end
-end
