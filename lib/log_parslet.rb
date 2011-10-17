@@ -4,15 +4,21 @@ require 'parslet'
 require 'parslet/convenience'
 require 'pp'
 
-require_relative 'log_parslet/parser/ipv4'
+require_relative 'log_parslet/rule_sets/base'
+require_relative 'log_parslet/rule_sets/ipv4'
+require_relative 'log_parslet/rule_sets/common'
+require_relative 'log_parslet/rule_sets/combined'
+
+require_relative 'log_parslet/parsers/common'
+require_relative 'log_parslet/parsers/combined'
 
 require_relative 'log_parslet/parser'
-require_relative 'log_parslet/transform'
+# require_relative 'log_parslet/transform'
 
 module LogParslet
 
   def self.parse(s)
-    parser = LogParslet::Parser.new
+    parser = LogParslet::Parser.new_parser(:combined)
 #    transform = LogParslet::Transform.new
 
     out = parser.parse(s)
